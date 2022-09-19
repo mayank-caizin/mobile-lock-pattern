@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permutations - Mobile Lock</title>
+
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>3 x 3 Lock Pattern</h1>
+            <p>No. of ways to connect</p>
+        </header>
+        <!-- <div id="grid">
+            <span>Grid size: </span>
+            <input type="number" name="rows" id="rows" class="form-control" value="3" min="2"> x
+            <input type="number" name="cols" id="cols" class="form-control" value="3" min="2">
+        </div> -->
+
+        <div id="range">
+            <span>No. of dots: </span>
+            <input type="number" name="min" id="min" class="form-control" placeholder="min" min="3" max="9">
+            <input type="number" name="max" id="max" class="form-control" placeholder="max" min="3"
+            max="9">
+        </div>
+
+        <div>
+            <button id="calculate" class="btn">Calculate</button>
+        </div>
+
+        <div id="output"></div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
