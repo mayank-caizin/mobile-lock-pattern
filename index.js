@@ -22,10 +22,10 @@ window.addEventListener('DOMContentLoaded', () => {
             alert('min has to be less than max');
             return false;
         }
-        if(min < 3) {
-            alert('min cannot be less than 3');
-            return false;
-        }
+        // if(min < 3) {
+        //     alert('min cannot be less than 3');
+        //     return false;
+        // }
 
         if(min > 9 || max > 9) {
             alert('min and max cannot be greater than 9');
@@ -40,21 +40,25 @@ window.addEventListener('DOMContentLoaded', () => {
         visited.fill(false);
 
         let ways = 0;
+        let ways2 = 0;
         for(let i = min; i <= max; i++) {
             ways += 4 * totalPatternFromCurrentCell(visited, jump, 1, i - 1);
+            ways2 += 4 * totalPatternFromCurrentCellIterative(visited, jump, 1, i - 1);
 
             ways += 4 * totalPatternFromCurrentCell(visited, jump, 2, i - 1);
+            ways2 += 4 * totalPatternFromCurrentCellIterative(visited, jump, 2, i - 1);
 
             ways += totalPatternFromCurrentCell(visited, jump, 5, i - 1);
+            ways2 += totalPatternFromCurrentCellIterative(visited, jump, 5, i - 1);
         }
+
+        console.log(ways2);
 
         return ways;
     }
 
     function totalPatternFromCurrentCell(visited, jump, curr, n) {
-        if(n <= 0) {
-            return n === 0 ? 1 : 0;
-        }
+        if(n == 0) return 1;
 
         let ways = 0;
         visited[curr] = true;
@@ -67,6 +71,41 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         visited[curr] = false;
+        return ways;
+    }
+
+    function totalPatternFromCurrentCellIterative(visited, jump, curr, n) {
+        const stack = [ [curr, n] ];
+        visited[curr] = true;
+        let ways = 0;
+
+        while(stack.length > 0) {
+            const [node, dist] = stack[stack.length - 1];
+
+            if(dist === 0) {
+                ways++;
+                stack.pop();
+                continue;
+            }
+
+            if(node === -1) {
+                stack.pop();
+                const [prev, d] = stack.pop();
+                visited[prev] = false;
+                continue;
+            }
+
+            visited[node] = true;
+            stack.push([-1, -1]);
+
+            for(let i = 1; i <= DOTS; i++) {
+                if(!visited[i] &&
+                    (!jump[i][node] || visited[jump[i][node]])) {
+                        stack.push([i, dist - 1]);
+                    }
+            }
+        }
+
         return ways;
     }
 
@@ -89,3 +128,8 @@ window.addEventListener('DOMContentLoaded', () => {
         return jump;
     }
 });
+
+
+// 1 2 3
+// 4 5 6
+// 7 8 9
